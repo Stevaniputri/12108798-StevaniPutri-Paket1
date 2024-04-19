@@ -19,17 +19,19 @@
                     <div class="d-flex justify-content-center align-items-center mb-3">
                         <a href="" class="btn btn-success btn-sm me-2"><i class="fas fa-info-circle"></i></a>
                         {{-- if else stock --}}
-                            <!-- Borrow button for available stock -->
+                            <!-- Borrow button for isBorrowed stAuthock -->
+                                <button type="submit" class="btn btn-secondary btn-sm me-2" disabled><i class="fas fa-book"></i> <span style="font-size: 12px">Borrow</span></button>    
+                            <!-- else -->
                             <form action="" method="POST">
-                                
                                 <button type="submit" class="btn btn-primary btn-sm me-2"><i class="fas fa-book"></i> <span style="font-size: 12px">Borrow</span></button>
                             </form>
-                       
+                            <!-- end -->
+                        {{-- else --}}
                             <!-- Button to trigger modal pop-up -->
                             <button type="button" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#alertModal">
                                 <i class="fas fa-book"></i> <span style="font-size: 12px">Borrow</span>
                             </button>
-                       
+                        {{-- end --}}
                             {{-- if else collection auth --}}
                             <button class="btn btn-secondary btn-sm" disabled><i class="far fa-heart"></i> <span style="font-size: 12px">Collection</span></button>
                         

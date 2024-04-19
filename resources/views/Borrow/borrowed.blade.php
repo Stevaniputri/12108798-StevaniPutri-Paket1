@@ -52,7 +52,13 @@
                                 </td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td>
+                                    {{-- if status --}}
+                                        <span class="badge bg-danger text-dark">Borrowed</span>
+                                    
+                                        <p>Tanggal Pengembalian</p> <-- ga usah pake p -->
+                                    
+                                </td>
                                 <td>
                                     {{-- if else status buku --}}
                                         <span class="badge bg-danger text-dark">Borrowed</span>

@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', [PageController::class, 'collection'])->name('dashboard');
+Route::get('/', [PageController::class, 'authPage'])->name('authPage');
