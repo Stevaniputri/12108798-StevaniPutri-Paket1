@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function collection()
     {
-        return view('Book.category');
+        return view('dashboardUser');
     }
 
     /**

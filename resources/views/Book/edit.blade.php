@@ -11,22 +11,21 @@
     <div class="card">
         <div class="card-body">
             <form method="POST" action="" enctype="multipart/form-data">
-                {{-- @csrf
-                @method('PUT') --}}
+
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Book Title</label>
                             <input type="text" placeholder="Enter book title" name="title" value="">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Writer</label>
                             <input type="text" placeholder="Enter writer" name="writer" value="">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Year</label>
                             <input type="text" placeholder="Enter publish year" name="year" value="">
@@ -34,10 +33,16 @@
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" placeholder="Add stock" name="stock" value="">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
                             <label>Category</label>
                             <select class="select" name="categoryId">
                                 <option value="id">name</option>
-                                {{-- fpreach category --}}
+                                {{-- foreach category --}}
                                 <option value="id">name</option>          
 
                             </select>

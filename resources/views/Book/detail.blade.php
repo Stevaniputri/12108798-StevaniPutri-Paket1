@@ -16,19 +16,21 @@
                         </div>
                         <div class="col-md-8">
                             <!-- Display book details -->
-                            <h5 class="card-title"></h5>
-                            <p class="card-text">Category: </p>
-                            <p class="card-text">Author: </p>
-                            <p class="card-text">Publisher: </p>
-                            <p class="card-text">Publication Year: </p>
+                            <h5 class="card-title">Title</h5>
+                            <p class="card-text">Category: Category Name</p>
+                            <p class="card-text">Author: writer</p>
+                            <p class="card-text">Publisher: publisher</p>
+                            <p class="card-text">Publication Year: books year</p>
+                            <p class="card-text">Stok Tersedia: stock</p>
 
-                            <!-- Check if the user has borrowed the book relasi to borrows and count>0 -->
-
-                                <!-- if else Check if the user has given a review relasi to reviews and count>0 -->
-
-                                    <p>Your Review: </p>
-                                
+                            <!-- Check if the user has borrowed the book -->
+                            {{-- if else borrowed auth id --}}
+                                <!-- Check if the user has given a review -->
+                                {{-- if else reviews auth id --}}
+                                    <p>Your Review: review auth id first</p>
+                                {{-- else --}}
                                     <p class="text-danger">You have not reviewed this book yet.</p>
+                                {{-- end --}}
 
                                 <!-- Form for review -->
                                 <form action="" method="post">
@@ -37,20 +39,21 @@
                                     <div class="mb-3">
                                         <label for="rating" class="form-label">Rating:</label>
                                         <div class="rating">
-                                            {{-- fungsi FOR star --}}
-                                                <i class="fas fa-star star" data-value="i"></i>
-                                            
+                                            {{-- for i --}}
+                                                <i class="fas fa-star star call-start" data-value="i"></i>
+                                            {{-- end --}}
                                         </div>
                                         <input type="hidden" name="rating" id="rating-input" value="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="review" class="form-label">Review:</label>
-                                        <textarea class="form-control" id="review" name="review" rows="3" required> </textarea>
+                                        <textarea class="form-control" id="review" name="review" rows="3" required> Review here </textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             {{-- else --}}
                                 <p class="text-danger">You must borrow this book before you can review and rate it.</p>
+                            
                         </div>
                     </div>
                 </div>

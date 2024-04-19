@@ -48,6 +48,7 @@
                             <th>Category</th>
                             <th>Publisher</th>
                             <th>Year</th>
+                            <th>Stock</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@
                                 No Image <!-- Tampilkan pesan jika cover tidak tersedia -->
                                 
                             </td>   
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

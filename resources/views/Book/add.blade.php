@@ -12,22 +12,28 @@
         <div class="card-body">
             <form method="POST" action="" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Book Title</label>
                             <input type="text" placeholder="Enter book title" name="title">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Writer</label>
                             <input type="text" placeholder="Enter writer" name="writer">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Year</label>
                             <input type="text" placeholder="Enter publish year" name="year">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" placeholder="Add stock" name="stock">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
