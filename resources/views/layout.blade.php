@@ -137,6 +137,12 @@
                                 <span>Borrowed Book</span>
                             </a>
                         </li>  
+                        <li>
+                            <a href="{{route('reviewAdmin')}}">
+                                <i class="fa fa-book-open"></i>
+                                <span>Data Review</span>
+                            </a>
+                        </li> 
                         @else
                         <li class="active">
                             <a href="{{route('dashboarduser')}}"><img src={{asset("assets/img/icons/dashboard.svg")}} alt="img"><span> Dashboard</span></a>

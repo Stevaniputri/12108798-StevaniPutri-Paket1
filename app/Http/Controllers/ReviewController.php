@@ -48,6 +48,12 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review added successfully.');
     }
 
+    public function dataReview()
+    {
+        $dataReview = Review::all();
+        return view('dataReview', compact('dataReview'));
+    }
+
     /**
      * Display the specified resource.
      */

@@ -15,15 +15,6 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private function generatePDF($view, $data, $filename)
-    {
-
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view($view, $data)->render());
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        return $dompdf->stream($filename);
-    }
 
     public function booklist()
     {
@@ -42,12 +33,6 @@ class BookController extends Controller
         $categories = Category::all();
         $books = Book::where('id', $id)->first();
         return view('Book.edit', compact('books', 'categories'));
-    }
-
-    public function exportBooksPDF()
-    {
-        $books = Book::all();
-        return $this->generatePDF('pdf.book', compact('books'), 'books.pdf');
     }
 
     public function detail($id)

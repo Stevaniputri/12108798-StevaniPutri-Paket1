@@ -14,21 +14,6 @@ class BorrowController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private function generatePDF($view, $data, $filename)
-    {
-
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view($view, $data)->render());
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        return $dompdf->stream($filename);
-    }
-
-    public function exportBorrowsPDF()
-    {
-        $borrows = Borrow::all();
-        return $this->generatePDF('pdf.borrow', compact('borrows'), 'borrows.pdf');
-    }
 
     public function borrowedUser()
     {

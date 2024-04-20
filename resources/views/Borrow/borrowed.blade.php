@@ -49,7 +49,7 @@
                             <tr>
                                 <td>
                                     <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $borrow->user->fullname }}</span>
-                                    <p>{{ $borrow->user->username }}</p>
+                                    <p>{{ $borrow->user->role }}</p>
                                 </td>
                                 <td>{{ $borrow->book->title }}</td>
                                 <td>{{ $borrow->tanggal_peminjaman }}</td>

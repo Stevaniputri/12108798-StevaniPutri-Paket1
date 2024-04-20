@@ -8,21 +8,6 @@ use Dompdf\Dompdf;
 
 class CategoryController extends Controller
 {
-    // private function generatePDF($view, $data, $filename)
-    // {
-
-    //     $dompdf = new Dompdf();
-    //     $dompdf->loadHtml(view($view, $data)->render());
-    //     $dompdf->setPaper('A4', 'portrait');
-    //     $dompdf->render();
-    //     return $dompdf->stream($filename);
-    // }
-
-    // public function exportCategoriesPDF()
-    // {
-    //     $categories = Category::all();
-    //     return $this->generatePDF('pdf.category', compact('categories'), 'categorys.pdf');
-    // }
     /**
      * Display a listing of the resource.
      */

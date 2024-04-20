@@ -29,7 +29,7 @@
                             <tr>
                                 <td>
                                     <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $item->user->fullname }}</span>
-                                    <p>{{ $item->user->username }}</p>
+                                    <p>{{ $item->user->role }}</p>
                                 </td>
                                 <td><a href="{{ route('book.detail', ['id' => $item->book->id]) }}"><span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $item->book->title }}</span></a></td>
                                 <td>{{ $item->tanggal_peminjaman }}</td>
