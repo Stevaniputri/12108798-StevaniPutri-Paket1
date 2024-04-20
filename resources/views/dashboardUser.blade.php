@@ -17,7 +17,7 @@
                     <h4>{{ $item->title }}</h4>
                 </div>
                 <div class="d-flex justify-content-center align-items-center mb-3">
-                    <a href="" class="btn btn-success btn-sm me-2"><i class="fas fa-info-circle"></i></a>
+                    <a href="{{ route('book.detail', ['id' => $item->id]) }}" class="btn btn-success btn-sm me-2"><i class="fas fa-info-circle"></i></a>
                     @if($item->stock > 0)
                         @if ($item->isBorrowed(Auth::id()))
                             <button type="submit" class="btn btn-secondary btn-sm me-2" disabled><i class="fas fa-book"></i> <span style="font-size: 12px">Borrow</span></button>    

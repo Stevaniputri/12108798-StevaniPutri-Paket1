@@ -65,6 +65,7 @@ class BookController extends Controller
     
         return view('Book.detail', compact('books', 'hasBorrowed', 'averageRating'));
     }
+    
 
     /**
      * Show the form for creating a new resource.

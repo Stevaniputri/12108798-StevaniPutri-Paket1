@@ -54,6 +54,8 @@ Route::post('/borrow/{book}', [BorrowController::class, 'borrowBook'])->name('bo
 Route::get('/user/borrowed', [BorrowController::class, 'borrowedUser'])->name('borrowedUser');
 Route::post('/return-book/{borrow}', [BorrowController::class, 'returnBook'])->name('return-book');
 Route::delete('/uncollection/{id}', [CollectionController::class, 'uncollection'])->name('uncollection');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+Route::get('/admin/borrowed', [BorrowController::class, 'borrowedAdmin'])->name('borrowedAdmin');
 
 Route::get('/logout', [PageController::class, 'logout'])->name('logout');
 Route::get('/error', [PageController::class, 'error'])->name('error');

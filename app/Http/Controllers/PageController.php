@@ -18,17 +18,16 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        // Ambil semua buku
-        // $books = Book::all();
-        // $adminsCount = User::where('role', 'admin')->count();
-        // $officersCount = User::where('role', 'petugas')->count();
-        // $borrowersCount = User::where('role', 'peminjam')->count();
-        // // Perbarui status buku berdasarkan status peminjaman
-        // foreach ($books as $book) {
-        //     $book->status = $book->borrows()->where('status', 'borrowed')->exists() ? 'borrowed' : 'available';
-        // }
+        $books = Book::all();
+        $adminsCount = User::where('role', 'admin')->count();
+        $officersCount = User::where('role', 'petugas')->count();
+        $borrowersCount = User::where('role', 'peminjam')->count();
 
-        return view('dashboard');
+        foreach ($books as $book) {
+            $book->status = $book->borrows()->where('status', 'borrowed')->exists() ? 'borrowed' : 'available';
+        }
+
+        return view('dashboard', compact('books', 'adminsCount', 'officersCount', 'borrowersCount'));
     }
 
     public function dashboardUser()

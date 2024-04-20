@@ -45,28 +45,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($borrows as $borrow)
                             <tr>
                                 <td>
-                                    <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)"></span>
-                                    <p></p>
+                                    <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $borrow->user->fullname }}</span>
+                                    <p>{{ $borrow->user->username }}</p>
                                 </td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $borrow->book->title }}</td>
+                                <td>{{ $borrow->tanggal_peminjaman }}</td>
                                 <td>
-                                    {{-- if status --}}
+                                    @if ($borrow->status === 'borrowed')
                                         <span class="badge bg-danger text-dark">Borrowed</span>
-                                    
-                                        <p>Tanggal Pengembalian</p> <-- ga usah pake p -->
-                                    
+                                    @else
+                                        {{ $borrow->tanggal_pengembalian }}
+                                    @endif
                                 </td>
                                 <td>
-                                    {{-- if else status buku --}}
+                                    @if ($borrow->status == 'borrowed')
                                         <span class="badge bg-danger text-dark">Borrowed</span>
-                                    
+                                    @else
                                         <span class="badge bg-success">Available</span>
-                                
+                                    @endif
                                 </td>
                             </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

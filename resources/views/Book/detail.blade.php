@@ -12,48 +12,48 @@
                     <div class="row">
                         <div class="col-md-4">
                             <!-- Display book image -->
-                            <img src="images/." alt="Book Image" class="img-fluid">
+                            <img src="{{ asset('images/' . $books->cover) }}" alt="Book Image" class="img-fluid">
                         </div>
                         <div class="col-md-8">
                             <!-- Display book details -->
-                            <h5 class="card-title">Title</h5>
-                            <p class="card-text">Category: Category Name</p>
-                            <p class="card-text">Author: writer</p>
-                            <p class="card-text">Publisher: publisher</p>
-                            <p class="card-text">Publication Year: books year</p>
-                            <p class="card-text">Stok Tersedia: stock</p>
+                            <h5 class="card-title">{{ $books->title }}</h5>
+                            <p class="card-text">Category: {{ $books->category->name }}</p>
+                            <p class="card-text">Author: {{ $books->writer }}</p>
+                            <p class="card-text">Publisher: {{ $books->publisher }}</p>
+                            <p class="card-text">Publication Year: {{ $books->year }}</p>
+                            <p class="card-text">Stok Tersedia: {{ $books->stock }}</p>
 
                             <!-- Check if the user has borrowed the book -->
-                            {{-- if else borrowed auth id --}}
+                            @if($books->isBorrowed(auth()->id()))
                                 <!-- Check if the user has given a review -->
-                                {{-- if else reviews auth id --}}
-                                    <p>Your Review: review auth id first</p>
-                                {{-- else --}}
+                                @if($books->reviews->where('user_id', auth()->id())->count() > 0)
+                                    <p>Your Review: {{ $books->reviews->where('user_id', auth()->id())->first()->review }}</p>
+                                @else
                                     <p class="text-danger">You have not reviewed this book yet.</p>
-                                {{-- end --}}
+                                @endif
 
                                 <!-- Form for review -->
-                                <form action="" method="post">
-                                    
-                                    <input type="hidden" name="book_id" value="booksId">
+                                <form action="{{ route('review.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="book_id" value="{{ $books->id }}">
                                     <div class="mb-3">
                                         <label for="rating" class="form-label">Rating:</label>
                                         <div class="rating">
-                                            {{-- for i --}}
-                                                <i class="fas fa-star star call-start" data-value="i"></i>
-                                            {{-- end --}}
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i class="fas fa-star star {{ $books->reviews->where('user_id', auth()->id())->count() > 0 && $i <= $books->reviews->where('user_id', auth()->id())->first()->rating ? 'text-warning' : '' }}" data-value="{{ $i }}"></i>
+                                            @endfor
                                         </div>
                                         <input type="hidden" name="rating" id="rating-input" value="">
                                     </div>
                                     <div class="mb-3">
                                         <label for="review" class="form-label">Review:</label>
-                                        <textarea class="form-control" id="review" name="review" rows="3" required> Review here </textarea>
+                                        <textarea class="form-control" id="review" name="review" rows="3" required>{{ $books->reviews->where('user_id', auth()->id())->count() > 0 ? $books->reviews->where('user_id', auth()->id())->first()->review : '' }}</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
-                            {{-- else --}}
+                            @else
                                 <p class="text-danger">You must borrow this book before you can review and rate it.</p>
-                            
+                            @endif
                         </div>
                     </div>
                 </div>

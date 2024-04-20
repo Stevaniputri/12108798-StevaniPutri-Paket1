@@ -5,7 +5,7 @@
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
             <div class="dash-count">
                 <div class="dash-counts">
-                    <h4></h4>
+                    <h4>{{ $adminsCount }}</h4>
                     <h5>Total Admin</h5>
                 </div>
                 <div class="dash-imgs">
@@ -16,7 +16,7 @@
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das1">
                 <div class="dash-counts">
-                    <h4></h4>
+                    <h4>{{ $officersCount }}</h4>
                     <h5>Total Petugas</h5>
                 </div>
                 <div class="dash-imgs">
@@ -27,7 +27,7 @@
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das2">
                 <div class="dash-counts">
-                    <h4></h4>
+                    <h4>{{ $borrowersCount }}</h4>
                     <h5>Total Peminjam</h5>
                 </div>
                 <div class="dash-imgs">
@@ -38,7 +38,7 @@
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das3">
                 <div class="dash-counts">
-                    <h4></h4>
+                    <h4>{{ $books->count() }}</h4>
                     <h5>Total Buku</h5>
                 </div>
                 <div class="dash-imgs">
@@ -72,18 +72,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($books as $item)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->writer }}</td>
+                                <td>{{ $item->publisher }}</td>
+                                <td>{{ $item->year }}</td>
                                 <td>
-                                    {{-- if else --}}
-                                    <span class="badge bg-danger">Borrowed</span>
-                                    <span class="badge bg-success">Available</span>
+                                    @if ($item->status == 'borrowed')
+                                        <span class="badge bg-danger">Borrowed</span>
+                                    @else
+                                        <span class="badge bg-success">Available</span>
+                                    @endif
                                 </td>
                             </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

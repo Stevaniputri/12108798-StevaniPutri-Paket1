@@ -29,7 +29,23 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'rating' => 'required|numeric|min:1|max:5', // Validasi rating
+            'review' => 'required|string',
+            'book_id' => 'required|exists:books,id', // Pastikan book_id ada dalam tabel books
+        ]);
+
+        // Simpan data review ke dalam database
+        $review = new Review();
+        $review->user_id = Auth::id();
+        $review->book_id = $request->book_id;
+        $review->review = $request->review;
+        $review->rating = $request->rating;
+        $review->save();
+
+        // Redirect kembali ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Review added successfully.');
     }
 
     /**
