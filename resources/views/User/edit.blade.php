@@ -10,37 +10,39 @@
 
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('updateUser', ['id' => $users->id]) }}">
+                @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Fullname</label>
-                            <input type="text" placeholder="Enter your fullname" name="fullname" value="">
+                            <input type="text" placeholder="Enter your fullname" name="fullname" value="{{ $users->fullname }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="text" placeholder="Enter username" name="username" value="">
+                            <input type="text" placeholder="Enter username" name="username" value="{{ $users->username }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" placeholder="Enter your email" name="email" value="">
+                            <input type="text" placeholder="Enter your email" name="email" value="{{ $users->email }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" placeholder="Enter your password" name="password" value="">
+                            <input type="password" placeholder="Enter your password" name="password" value="{{ $users->password }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Role</label>
                             <select class="select" name="role">
-                                <option value="role">role</option>
+                                <option value="{{ $users->role }}">{{ $users->role }}</option>
                                 <option value="admin">Admin</option>
                                 <option value="petugas">Petugas</option>
                                 <option value="peminjam">Peminjam</option>
@@ -50,7 +52,7 @@
                     <div class="col-lg-9 col-12">
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" placeholder="Enter your address" name="address" value="">
+                            <input type="text" placeholder="Enter your address" name="address" value="{{ $users->address }}">
                         </div>
                     </div>
                     <div class="col-lg-12 mt-lg-3">

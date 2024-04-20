@@ -8,20 +8,57 @@ use Dompdf\Dompdf;
 
 class CategoryController extends Controller
 {
+    // private function generatePDF($view, $data, $filename)
+    // {
+
+    //     $dompdf = new Dompdf();
+    //     $dompdf->loadHtml(view($view, $data)->render());
+    //     $dompdf->setPaper('A4', 'portrait');
+    //     $dompdf->render();
+    //     return $dompdf->stream($filename);
+    // }
+
+    // public function exportCategoriesPDF()
+    // {
+    //     $categories = Category::all();
+    //     return $this->generatePDF('pdf.category', compact('categories'), 'categorys.pdf');
+    // }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function category()
     {
-        //
+        $categories = Category::all();
+        return view('Book.category', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        Category::create([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('category')->with('success', 'berhasil menambahkan category');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        Category::where('id', $id)->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('category')->with('success', 'berhasil menambahkan category');
     }
 
     /**
@@ -49,18 +86,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function delete($id)
     {
-        //
+        Category::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'berhasil menghapus data');
     }
 }

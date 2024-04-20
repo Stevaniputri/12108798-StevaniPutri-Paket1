@@ -10,7 +10,8 @@
 
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('createUser') }}">
+                @csrf
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">

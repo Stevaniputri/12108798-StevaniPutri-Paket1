@@ -75,9 +75,10 @@
                                 <span class="user-img"><img src={{asset("assets/img/profiles/avator1.jpg")}} alt="">
                                     <span class="status online"></span></span>
                                 <div class="profilesets">
-                                    {{-- auth --}}
-                                    <h6>User</h6>
-                                    <h5>Role</h5>    
+                                    @auth
+                                    <h6>{{ Auth::user()->fullname }}</h6>
+                                    <h5>{{ Auth::user()->role }}</h5>    
+                                    @endauth
                                 </div>
                             </div>
                             <hr class="m-0">
@@ -86,7 +87,7 @@
                             <a class="dropdown-item" href="generalsettings.html"><i class="me-2"
                                     data-feather="settings"></i>Settings</a>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href=""><img
+                            <a class="dropdown-item logout pb-0" href="{{route('logout')}}"><img
                                     src={{asset("assets/img/icons/log-out.svg")}} class="me-2" alt="img">Logout</a>
                         </div>
                     </div>
@@ -100,7 +101,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="">My Profile</a>
                     <a class="dropdown-item" href="">Settings</a>
-                    <a class="dropdown-item" href="">Logout</a>
+                    <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
                 </div>
             </div>
 
@@ -110,9 +111,9 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        {{-- if cek role --}}
+                        @if(Auth::user()->role === 'admin' || Auth::user()->role === 'petugas')
                         <li class="active">
-                            <a href=""><img src={{asset("assets/img/icons/dashboard.svg")}} alt="img"><span> Dashboard</span></a>
+                            <a href="{{route('dashboard')}}"><img src={{asset("assets/img/icons/dashboard.svg")}} alt="img"><span> Dashboard</span></a>
                         </li>
                         <li class="submenu">
                             <a href="javascript:void(0);">
@@ -120,38 +121,40 @@
                                 <span>
                                     Book</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="">Book List</a></li>
-                                <li><a href="">Book Category</a></li>
+                                <li><a href="{{route('booklist')}}">Book List</a></li>
+                                <li><a href="{{route('category')}}">Book Category</a></li>
                             </ul>
                         </li> 
                         <li>
-                            <a href="">
+                            <a href="{{route('userlist')}}">
                                 <i class="fas fa-user" style="font-size: 20px; color: #212b36"></i>
                                 <span>User</span>
                             </a>
                         </li> 
                         <li>
-                            <a href="">
+                            <a href="{{route('borrowedAdmin')}}">
                                 <i class="fa fa-book-open"></i>
                                 <span>Borrowed Book</span>
                             </a>
-                        </li>
-                        {{-- user --}}
+                        </li>  
+                        @else
                         <li class="active">
-                            <a href=""><img src={{asset("assets/img/icons/dashboard.svg")}} alt="img"><span> Dashboard</span></a>
+                            <a href="{{route('dashboarduser')}}"><img src={{asset("assets/img/icons/dashboard.svg")}} alt="img"><span> Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="{{ route('mycollection') }}">
                                 <i class="fas fa-bookmark" style="font-size: 20px; color: #212b36"></i>
                                 <span>My Collection</span>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="{{route('borrowedUser')}}">
                                 <i class="fa fa-book-open"></i>
                                 <span>Borrowed Book</span>
                             </a>
-                        </li>                        
+                        </li>
+                        @endif                    
+                        
                     </ul>
                 </div>
             </div>

@@ -7,7 +7,7 @@
             <h6>Manage your Books</h6>
         </div>
         <div class="page-btn">
-            <a href="" class="btn btn-added"><img src={{asset("assets/img/icons/plus.svg")}} alt="img">Add Book</a>
+            <a href="{{route('addBook')}}" class="btn btn-added"><img src={{asset("assets/img/icons/plus.svg")}} alt="img">Add Book</a>
         </div>
     </div>
 
@@ -53,30 +53,33 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($dataBook as $key => $item)
                         <tr>                         
-                            <td></td>
+                            <td>{{ $key + 1 }}</td>
                             <td>
-                                {{-- if else --}}
-                                <img src="images/." alt="Cover" style="max-width: 100px;"> <!-- Tambahkan tag img untuk menampilkan cover -->
-                                
+                                @if($item->cover)
+                                <img src="{{ asset('images/' . $item->cover) }}" alt="Cover" style="max-width: 100px;"> <!-- Tambahkan tag img untuk menampilkan cover -->
+                                @else
                                 No Image <!-- Tampilkan pesan jika cover tidak tersedia -->
-                                
+                                @endif
                             </td>   
+                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->writer }}</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $item->publisher }}</td>
+                            <td>{{ $item->year }}</td>
+                            <td>{{ $item->stock }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <!-- Icon untuk mengedit buku (Ukuran: 2x, Warna: Kuning) -->
-                                    <a href="">
+                                    <a href="{{ route('editBook', $item->id) }}">
                                         <i class="fas fa-edit fa-lg" style="color: orange;"></i>
                                     </a>
                                     
                                     <!-- Form untuk menghapus buku (Ukuran: lg, Warna: Merah) -->
-                                    <form id="deleteForm_itemId" method="POST" action="">
+                                    <form id="deleteForm_{{ $item->id }}" method="POST" action="{{ route('deleteBook', ['id' => $item->id]) }}">
+                                        @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-delete">
                                             <i class="fas fa-trash-alt fa-lg" style="color: red;"></i>
                                         </button>
@@ -84,6 +87,7 @@
                                 </div>                        
                             </td>                                                                 
                         </tr>   
+                        @endforeach
                     </tbody>
                 </table>
             </div>

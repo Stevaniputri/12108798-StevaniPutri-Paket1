@@ -48,22 +48,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($categories as $key => $item)
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->name }}</td>
                             <td class="d-flex align-items-center">
-                                <a class="btn" data-bs-toggle="modal" data-bs-target="#editCategoryModal-itemId">
+                                <a class="btn" data-bs-toggle="modal" data-bs-target="#editCategoryModal-{{ $item->id }}">
                                     <i class="fas fa-edit fa-lg" style="color: orange;"></i>
                                 </a>
-                                <form id="deleteForm_itemId" method="POST" action="">
+                                <form id="deleteForm_{{ $item->id }}" method="POST" action="{{ route('deleteCategory', ['id' => $item->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="btn delete-category-btn">
                                         <i class="fas fa-trash-alt fa-lg" style="color: red;"></i>
                                     </button>
-                                </form>                                   
+                                </form>                                    
                             </td>
-                        </tr>  
+                        </tr>      
                         <!-- Modal untuk Edit Category -->
-                        <div class="modal fade" id="editCategoryModal-itemId" tabindex="-1" aria-labelledby="editCategoryModalLabel-itemId" aria-hidden="true">
+                        <div class="modal fade" id="editCategoryModal-{{ $item->id }}" tabindex="-1" aria-labelledby="editCategoryModalLabel-itemId" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -71,12 +74,13 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="editCategoryForm" method="POST" action="">
-
+                                        <form id="editCategoryForm" method="POST" action="{{ route('updateCategory', ['id' => $item->id]) }}">
+                                            @csrf
+                                            @method('PUT')
                                             <input type="hidden" id="editCategoryId" name="id">
                                             <div class="mb-3">
                                                 <label for="editCategoryName" class="form-label">Category Name</label>
-                                                <input type="text" class="form-control" id="editCategoryName" name="name" value="">
+                                                <input type="text" class="form-control" id="editCategoryName" name="name" value="{{ $item->name }}">
                                             </div>
                                             <div class="text-end">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -87,6 +91,7 @@
                                 </div>
                             </div>
                         </div> 
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -100,8 +105,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addCategoryForm" method="POST" action="">
-
+                    <form id="addCategoryForm" method="POST" action="{{ route('createCategory') }}">
+                        @csrf
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Category Name</label>
                             <input type="text" class="form-control" name="name">
@@ -125,7 +130,7 @@
 </script>
 <script>
     // Fungsi untuk menampilkan modal edit ketika tombol "Edit" diklik
-    @foreach ($dataCategories as $item)
+    @foreach ($categories as $item)
         document.getElementById('editCategoryBtn-{{ $item->id }}').addEventListener('click', function() {
             var modal = new bootstrap.Modal(document.getElementById('editCategoryModal-{{ $item->id }}'));
             modal.show();

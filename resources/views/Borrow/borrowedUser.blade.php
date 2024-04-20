@@ -25,34 +25,37 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($books as $item)
                             <tr>
                                 <td>
-                                    <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)"></span>
-                                    <p></p>
+                                    <span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $item->user->fullname }}</span>
+                                    <p>{{ $item->user->username }}</p>
                                 </td>
-                                <td><a href=""><span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)"></span></a></td>
-                                <td></td>
-                                <td></td>
+                                <td><a href="{{ route('book.detail', ['id' => $item->book->id]) }}"><span style="font-size: 16px; font-weight: 600; color: rgba(96, 122, 204, 0.933)">{{ $item->book->title }}</span></a></td>
+                                <td>{{ $item->tanggal_peminjaman }}</td>
+                                <td>{{ $item->tanggal_pengembalian }}</td>
                                 <td>
-                                    {{-- if else status buku --}}
+                                    @if ($item->status == 'borrowed')
                                         <span class="badge bg-danger text-dark">Borrowed</span>
-                                    
+                                    @else
                                         <span class="badge bg-success">Available</span>
-                                    
+                                    @endif
                                 </td>
                                 <td>
-                                    {{-- if else status buku --}}
-                                    <form action="" method="POST">
-
+                                    @if ($item->status == 'borrowed')
+                                    <form action="{{ route('return-book', $item) }}" method="POST">
+                                        @csrf
+                                        @method('POST')
                                         <button type="submit" class="btn btn-sm btn-primary" style="font-size: 12px">
                                             <i class="fa fa-share"></i> Return
                                         </button>
                                     </form>  
-                                    {{-- else --}}
+                                    @else
                                         <span class="badge bg-success">Returned</span>
-                                    
+                                    @endif
                                 </td>
                             </tr>
+                        @endforeach
                     </tbody>                    
                 </table>
             </div>

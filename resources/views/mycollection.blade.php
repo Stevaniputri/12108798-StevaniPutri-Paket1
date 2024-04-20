@@ -24,41 +24,70 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($collectionBooks as $item)
                         <tr>
                             <td>
                                 <div class="">
                                     <span style="font-weight: 600; color: rgb(89, 128, 211)">
-                                        {{-- if else --}}
-                                        Book not Available
+                                        @if($item->book)
+                                            {{ $item->book->title }}
+                                        @else
+                                            Book not available
+                                        @endif
                                     </span>
                                     <p>
-                                        {{-- if dalam if category --}}
+                                        @if($item->book)
+                                            @if($item->book->category)
+                                                {{ $item->book->category->name }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
                                     </p>
                                 </div>
                             </td>
                             <td>
-                                {{-- if relasi ke book --}}
+                                @if($item->book)
+                                    {{ $item->book->writer }}
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>
-
+                                @if($item->book)
+                                    {{ $item->book->publisher }}
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>
-
+                                @if($item->book)
+                                    {{ $item->book->year }}
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-start">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('uncollection', ['id' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm me-2"><i class="fas fa-trash"></i></button>
                                     </form>
-                                    {{-- if relasi ke borrow ambil user id dan status buku --}}
-                                    <span class="badge bg-danger d-flex align-center">Borrowed</span>
-
-                                        <form action="" method="POST">
+                                    @if($item->book->borrows()->where('user_id', auth()->id())->where('status', 'borrowed')->exists())
+                                        <span class="badge bg-danger d-flex align-center">Borrowed</span>
+                                    @else
+                                        <form action="{{ route('borrow', ['book' => $item->book->id]) }}" method="POST">
+                                            @csrf
                                             <button type="submit" class="btn btn-success btn-sm me-2"><i class="fas fa-book"></i> Borrow</button>
                                         </form>
+                                    @endif
                                 </div>
                             </td>                            
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

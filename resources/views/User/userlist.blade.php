@@ -7,7 +7,7 @@
             <h6>Manage your Users</h6>
         </div>
         <div class="page-btn">
-            <a href="" class="btn btn-added"><img src="assets/img/icons/plus.svg" alt="img">Add User</a>
+            <a href="{{ route('addUser') }}" class="btn btn-added"><img src="assets/img/icons/plus.svg" alt="img">Add User</a>
         </div>
     </div>
 
@@ -52,27 +52,46 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($users as $key => $item)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->username }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>{{ $item->fullname }}</td>
+                            <td>{{ $item->address }}</td>
                             <td>
-                                {{-- php badgeColor --}}
-                                <span class="badge bg-badgeColor"></span>
+                                @php
+                                $badgeColor = '';
+                                switch ($item->role) {
+                                    case 'admin':
+                                        $badgeColor = 'success';
+                                        break;
+                                    case 'petugas':
+                                        $badgeColor = 'primary';
+                                        break;
+                                    case 'peminjam':
+                                        $badgeColor = 'warning';
+                                        break;
+                                    default:
+                                        $badgeColor = 'secondary';
+                                }
+                                @endphp
+                                <span class="badge bg-{{$badgeColor}}">{{$item->role}}</span>
                             </td>
                             <td class="d-flex align-items-center">
-                                <a href="">
+                                <a href="{{ route('editUser', $item->id) }}">
                                     <i class="fas fa-edit fa-lg" style="color: orange;"></i>
                                 </a>
-                                <form id="deleteForm_itemId" method="POST" action="">
-                                    <button type="button" class="btn" onclick="confirmDelete(itemId)">
+                                <form id="deleteForm_{{$item->id}}" method="POST" action="{{ route('deleteUser', ['id' => $item->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn" onclick="confirmDelete({{ $item->id }})">
                                         <i class="fas fa-trash-alt fa-lg" style="color: red;"></i>
                                     </button>
                                 </form>                                
                             </td>
                         </tr>   
+                        @endforeach 
                     </tbody>
                 </table>
             </div>
