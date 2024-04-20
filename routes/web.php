@@ -68,6 +68,8 @@ Route::middleware('isLogin', 'CekRole:peminjam')->group(function(){
     Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 });
 
-
+Route::get('/export-books-pdf', [BookController::class, 'exportBooksPDF'])->name('exportBooksPDF');
+Route::get('/export-users-pdf', [UserController::class, 'exportUsersPDF'])->name('exportUsersPDF');
+Route::get('/export-categories-pdf', [CategoryController::class, 'exportCategoriesPDF'])->name('exportCategoriesPDF');
 Route::get('/logout', [PageController::class, 'logout'])->name('logout');
 Route::get('/error', [PageController::class, 'error'])->name('error');

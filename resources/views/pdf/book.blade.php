@@ -31,12 +31,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        @foreach ($books as $item)
+            <tr>
+                <td>{{ $item->title }}</td>
+                <td>{{ $item->writer }}</td>
+                <td>{{ $item->publisher }}</td>
+                <td>{{ $item->year }}</td>
+            </tr>            
+        @endforeach
     </tbody>
 </table>
 </body>

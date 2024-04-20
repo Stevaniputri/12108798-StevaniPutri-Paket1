@@ -34,11 +34,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            @foreach ($categories as $key => $item)
+                <tr>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td> {{ $item->created_at->format('Y-m-d')}} </td>
+                </tr>                
+            @endforeach
         </tbody>
     </table>
 </body>

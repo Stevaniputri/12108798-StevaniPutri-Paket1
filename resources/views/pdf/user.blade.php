@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category List</title>
+    <title>User List PDF</title>
     <style>
         table {
             width: 100%;
@@ -20,7 +20,6 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-
     </style>
 </head>
 <body>
@@ -36,13 +35,15 @@
             </tr>
         </thead>
         <tbody>
+            @foreach ($users as $user)
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ $user->fullname }}</td>
+                <td>{{ $user->username }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->address }}</td>
+                <td>{{ $user->role }}</td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 </body>

@@ -73,21 +73,22 @@
                     </thead>
                     <tbody>
                         @foreach ($books as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ $item->writer }}</td>
-                                <td>{{ $item->publisher }}</td>
-                                <td>{{ $item->year }}</td>
-                                <td>
-                                    @if ($item->status == 'borrowed')
-                                        <span class="badge bg-danger">Borrowed</span>
-                                    @else
-                                        <span class="badge bg-success">Available</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->writer }}</td>
+                            <td>{{ $item->publisher }}</td>
+                            <td>{{ $item->year }}</td>
+                            <td>
+                                @if ($item->stock > 0)
+                                    <span class="badge bg-success">Available</span>
+                                @else
+                                    <span class="badge bg-danger">Borrowed</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    
                     </tbody>
                 </table>
             </div>

@@ -14,17 +14,14 @@
     <div class="card">
         <div class="card-body">
             <div class="table-top">
-                <div class="search-set">
-                    <div class="search-input">
-                        <a class="btn btn-searchset"><img src={{asset("assets/img/icons/search-white.svg")}}
-                                alt="img"></a>
-                    </div>
-                </div>
+                <form action="{{ route('category') }}" method="GET">
+                    <input type="text" name="search" placeholder="Search..." value="{{ request()->search }}">
+                    <button type="submit">Search</button>
+                </form>
                 <div class="wordset">
                     <ul>
                         <li>
-                            <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img
-                                    src={{asset("assets/img/icons/pdf.svg")}} alt="img"></a>
+                            <a href="{{ route('exportCategoriesPDF', ['search' => request()->query('search')]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{{ asset('assets/img/icons/pdf.svg') }}" alt="img"></a>
                         </li>
                         <li>
                             <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img

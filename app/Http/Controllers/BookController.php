@@ -15,10 +15,53 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    public function booklist()
+    private function generatePDF($view, $data, $filename)
     {
-        $dataBook = Book::latest()->get();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view($view, $data)->render());
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $dompdf->stream($filename);
+    }
+
+    public function exportBooksPDF(Request $request)
+    {
+        $query = Book::query();
+
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('writer', 'like', '%' . $search . '%')
+                  ->orWhere('publisher', 'like', '%' . $search . '%')
+                  ->orWhere('year', 'like', '%' . $search . '%');
+            });
+        }
+
+        $books = $query->get();
+
+        return $this->generatePDF('pdf.book', compact('books'), 'books.pdf');
+    }
+
+    public function booklist(Request $request)
+    {
+        $query = Book::latest();
+
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('writer', 'like', '%' . $search . '%')
+                  ->orWhere('publisher', 'like', '%' . $search . '%')
+                  ->orWhere('year', 'like', '%' . $search . '%');
+            });
+        }
+
+        $dataBook = $query->get();
+
         return view('Book.booklist', compact('dataBook'));
     }
 

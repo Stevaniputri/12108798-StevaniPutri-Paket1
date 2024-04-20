@@ -8,12 +8,47 @@ use Dompdf\Dompdf;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function category()
+    private function generatePDF($view, $data, $filename)
     {
-        $categories = Category::all();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view($view, $data)->render());
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $dompdf->stream($filename);
+    }
+
+        public function exportCategoriesPDF(Request $request)
+    {
+        $query = Category::query();
+        
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $categories = $query->get();
+
+        return $this->generatePDF('pdf.category', compact('categories'), 'Categories.pdf');
+    }
+
+    public function category(Request $request)
+    {
+        $query = Category::latest();
+               
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $categories = $query->get();
+
         return view('Book.category', compact('categories'));
     }
 

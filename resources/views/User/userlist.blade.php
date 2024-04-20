@@ -14,18 +14,16 @@
     <div class="card">
         <div class="card-body">
             <div class="table-top">
-                <div class="search-set">
-                    <div class="search-input">
-                        <a class="btn btn-searchset"><img src="assets/img/icons/search-white.svg"
-                                alt="img"></a>
-                    </div>
-                </div>
+                <form action="{{ route('userlist') }}" method="GET">
+                    <input type="text" name="search" placeholder="Search..." value="{{ request()->search }}">
+                    <button type="submit">Search</button>
+                </form>
                 <div class="wordset">
                     <ul>
                         <li>
-                            <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img
-                                    src="assets/img/icons/pdf.svg" alt="img"></a>
-                        </li>
+                            <a href="{{ route('exportUsersPDF', ['search' => request()->query('search')]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{{ asset('assets/img/icons/pdf.svg') }}" alt="img"></a>
+                            </a>
+                        </li>                        
                         <li>
                             <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img
                                     src="assets/img/icons/excel.svg" alt="img"></a>
@@ -79,25 +77,28 @@
                                 <span class="badge bg-{{$badgeColor}}">{{$item->role}}</span>
                             </td>
                             <td class="d-flex align-items-center">
-                                <a href="{{ route('editUser', $item->id) }}">
-                                    <i class="fas fa-edit fa-lg" style="color: orange;"></i>
-                                </a>
-                                <form id="deleteForm_{{$item->id}}" method="POST" action="{{ route('deleteUser', ['id' => $item->id]) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn" onclick="confirmDelete({{ $item->id }})">
-                                        <i class="fas fa-trash-alt fa-lg" style="color: red;"></i>
-                                    </button>
-                                </form>                                
+                                @if(Auth::user()->role !== 'admin' || (Auth::user()->role === 'admin' && $item->role !== 'admin'))
+                                    <!-- Hanya tampilkan tombol hapus jika pengguna yang login bukan admin atau jika pengguna yang login adalah admin tetapi tidak mencoba menghapus dirinya sendiri -->
+                                    <a href="{{ route('editUser', $item->id) }}">
+                                        <i class="fas fa-edit fa-lg" style="color: orange;"></i>
+                                    </a>
+                                    <form id="deleteForm_{{$item->id}}" method="POST" action="{{ route('deleteUser', ['id' => $item->id]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn" onclick="confirmDelete({{ $item->id }})">
+                                            <i class="fas fa-trash-alt fa-lg" style="color: red;"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
-                        </tr>   
-                        @endforeach 
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>   
+</div>
 <script>
     // Fungsi untuk menampilkan alert sebelum menghapus data
     function confirmDelete(id) {

@@ -10,9 +10,55 @@ use Dompdf\Dompdf;
 
 class UserController extends Controller
 {
-    public function userlist()
+    private function generatePDF($view, $data, $filename)
     {
-        $users = User::all();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view($view, $data)->render());
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $dompdf->stream($filename);
+    }
+
+    public function exportUsersPDF(Request $request)
+    {
+        $query = User::query();
+
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('fullname', 'like', '%' . $search . '%')
+                  ->orWhere('username', 'like', '%' . $search . '%')
+                  ->orWhere('role', 'like', '%' . $search . '%')
+                  ->orWhere('address', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $users = $query->get();
+
+        return $this->generatePDF('pdf.user', compact('users'), 'users.pdf');
+    }
+
+    public function userlist(Request $request)
+    {
+        $query = User::query();
+
+        // Lakukan filter berdasarkan kata kunci pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('fullname', 'like', '%' . $search . '%')
+                  ->orWhere('username', 'like', '%' . $search . '%')
+                  ->orWhere('role', 'like', '%' . $search . '%')
+                  ->orWhere('address', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $users = $query->get();
+
         return view('User.userlist', compact('users'));
     }
 
